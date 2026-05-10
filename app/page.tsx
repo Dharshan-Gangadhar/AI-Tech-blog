@@ -8,11 +8,12 @@ export default function Home() {
   return (
     <>
       <Container className="mt-9">
-        <div className="max-w-2xl">
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
+        <div className="relative max-w-2xl">
+          <div className="absolute -left-10 -top-10 -z-10 h-32 w-32 rounded-full bg-blue-500/20 blur-3xl dark:bg-blue-600/20"></div>
+          <h1 className="bg-gradient-to-br from-zinc-900 via-zinc-700 to-zinc-500 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent dark:from-zinc-100 dark:via-zinc-300 dark:to-zinc-600 sm:text-6xl sm:leading-[1.1]">
             Full Stack Developer, AI & Tech Enthusiast, and Continuous Learner.
           </h1>
-          <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
+          <p className="mt-6 text-lg leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-xl">
             I&apos;m a prefinal year computer science student building intelligent systems and documenting my journey. Here, I share my thoughts on Artificial Intelligence, machine learning, and Technology.
           </p>
         </div>
