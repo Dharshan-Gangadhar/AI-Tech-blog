@@ -1,0 +1,77 @@
+---
+title: "AI Secrets: How Do Computers Understand Words?"
+date: "2026-07-17"
+excerpt: "Computers only know numbers, not words. So how does an AI know what a dog, a cat, or an apple is? Let's unlock the secret code AI uses to read!"
+tags: ["learning", "ai", "fundamentals", "kids-coding"]
+---
+
+Imagine you are trying to talk to a friendly robot. You say, *"I love my puppy!"* The robot smiles and nods. 
+
+It feels like the robot understood you perfectly. But here is a big secret: **computers cannot read words.** 
+
+If you open up a computer’s brain, it doesn't know what the letter "A" is, and it definitely doesn't know what a "puppy" is. Computers only know numbers—specifically, long chains of zeros and ones (**1** and **0**). 
+
+So, how does the robot turn your words into numbers and figure out what you mean? It uses two clever tricks: **Word Chopping** and a **Secret Meaning Map**.
+
+---
+
+## Trick 1: Word Chopping (Tokens)
+
+Before a computer can read a sentence, it has to chop it into smaller, bite-sized pieces. Scientists call these pieces **tokens**.
+
+Think of it like building with LEGO bricks. If you have the word `Learning`, the computer might chop it into two blocks: `Learn` and `ing`. 
+
+Let’s look at a whole sentence:
+* **What you type:** `"Coding is awesome!"`
+* **How the computer chops it:** `["Code", "ing", " is", " awesome", "!"]`
+
+Once the sentence is chopped into blocks, the computer gives every single block its own special number code. For example, `Code` might become `412`, and `awesome` might become `899`. 
+
+Now the computer has a list of numbers! But how does it know what those numbers actually *mean*?
+
+---
+
+## Trick 2: The Secret Meaning Map (Embeddings)
+
+How do you explain to a computer that a **banana** and an **apple** are similar, but a **banana** and a **rocket ship** are totally different? 
+
+You play a game of hot-and-cold on a giant imaginary map!
+
+Imagine a massive sheet of paper. We are going to place words on this map based on clues. 
+
+### Clue 1: Is it something you can eat?
+* If it's a food, we put it on the **right side** of the map.
+* If it's not a food, we put it on the **left side** of the map.
+
+### Clue 2: Is it an animal?
+* If it's an animal, we put it at the **top** of the map.
+* If it's not an animal, we put it at the **bottom** of the map.
+ ```text
+                  ANIMAL (Top)
+                       |
+                       |    * Puppy
+                       |
+  NOT FOOD (Left) -----+----- FOOD (Right)
+                       |
+        * Rocket Ship  |    * Apple
+                       |    * Banana
+                       |
+                NOT ANIMAL (Bottom)
+```
+Look at where the words landed on our map:
+* **Apple** and **Banana** are right next to each other because they are both fruits you can eat. 
+* **Puppy** is way up at the top because it's a living animal.
+* **Rocket Ship** is far away in the corner because you definitely can't eat a rocket, and it isn't an animal!
+
+Every single word has an exact address (like a map coordinate) on this giant sheet of paper. When the AI reads the number code for "Apple," it instantly looks up its address on the map. Because "Apple" and "Banana" live in the same neighborhood, the AI knows they are related!
+
+---
+
+## Putting It All Together
+
+When you text an AI, it does three things in the blink of an eye:
+1. It **chops** your sentence into little word blocks.
+2. It changes those blocks into **number codes**.
+3. It finds those numbers on its **Secret Meaning Map** to see which word-neighborhoods you are talking about.
+
+That is how a computer that only knows **1** and **0** can understand your stories, tell you jokes, and talk about puppies!
