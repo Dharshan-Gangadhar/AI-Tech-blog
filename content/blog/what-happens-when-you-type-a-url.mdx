@@ -1,0 +1,89 @@
+---
+title: "Computer Fundamentals: What Actually Happens When You Type a URL?"
+date: "2026-07-20"
+excerpt: "You type 'google.com' and press Enter. Less than a second later, a webpage appears. What crazy 5-step journey just happened behind the scenes?"
+tags: ["networking", "webdev", "dns", "http", "computer-science"]
+---
+
+It is something we do dozens—if not hundreds—of times every single day. 
+
+You open your browser, type ```google.com``` into the address bar, hit **Enter**, and in a fraction of a second, a pixel-perfect webpage pops up on your screen.
+
+It feels instant. Almost like magic.
+
+But behind the curtain, your browser just went on a high-speed, 5-step global journey involving phonebooks, digital handshakes, and shipping packages. 
+
+Let’s unpack what actually happens in those few milliseconds—no complex networking jargon required!
+
+---
+
+## Step 1: Finding the Address (DNS Lookup) 📖
+
+Computers don't actually understand human names like `google.com` or `github.com`. They communicate using numeric **IP Addresses** (like `142.250.190.46`), which act as the digital street addresses for servers.
+
+So before your browser can talk to a website, it needs to translate the name into a number.
+
+### 💡 The Analogy: Your Phone's Contacts App
+Imagine you want to call your friend **Alex**. You don't dial the letters "A-L-E-X" on your keypad—you look up "Alex" in your phonebook to find their actual phone number.
+
+That digital phonebook is called the **DNS (Domain Name System)**. 
+1. Your browser checks its local memory (cache): *"Have we visited google.com recently?"*
+2. If not, it asks your Internet Service Provider's DNS server: *"Hey, what is the IP address for google.com?"*
+3. The DNS server replies: *"Found it! It’s 142.250.190.46."*
+
+---
+
+## Step 2: Knocking on the Door (TCP Handshake) 🤝
+
+Now that your browser knows *where* the server lives, it can't just blurt out data requests right away. It needs to establish a secure, reliable connection first.
+
+It does this using a protocol called **TCP (Transmission Control Protocol)** via a process known as the **3-Way Handshake**.
+
+```text
+Your Browser ----------------> "Hello! Can we talk?" ----------------> Website Server
+Your Browser <-------- "Hi! Yes, I'm ready. Can you hear me?" <-------- Website Server
+Your Browser -----------------> "Great, let's start!" -----------------> Website Server
+```
+
+Once both sides agree the line is open and secure (handling encryption via SSL/TLS for `https`), the connection is locked in.
+
+---
+
+## Step 3: Asking for the Page (HTTP Request) 📦
+
+With the door open, your browser sends an **HTTP Request** asking for the website files.
+
+### 💡 The Analogy: Placing a Delivery Order
+Your browser sends a tiny digital letter saying:
+> *"Hey Server! Give me the `index.html` file, along with any CSS styles, JavaScript scripts, and images needed to render the homepage."*
+
+---
+
+## Step 4: The Server Ships the Files (HTTP Response) 🚚
+
+The server processes the request, checks its storage, and sends back an **HTTP Response** with a **Status Code**:
+
+* **200 OK:** *"Found everything! Here are your files."*
+* **404 Not Found:** *"Oops, that page doesn't exist."*
+* **500 Internal Server Error:** *"My bad, something broke on my end!"*
+
+Assuming all goes well (Status 200), the server sends the raw code—HTML, CSS, JavaScript, and media assets—back across the internet in tiny data packets.
+
+---
+
+## Step 5: Rendering the Pixels (Browser Engine) 🎨
+
+Now comes the final magic trick: your browser receives raw text code and turns it into a visual UI you can click on.
+
+1. **HTML Parsing:** The browser builds the skeleton structure (the DOM tree).
+2. **CSS Styling:** It paints colors, sets layouts, and applies fonts onto the skeleton.
+3. **JavaScript Execution:** It runs interactive logic (like buttons, animations, and dark mode toggles).
+
+And just like that—all within **200 to 500 milliseconds**—the website appears on your screen!
+
+---
+
+## Summary Cheat Sheet 💡
+```
+[ Type URL ] ➡️ 1. DNS Lookup (Find IP) ➡️ 2. TCP Handshake (Connect) ➡️ 3. HTTP Request ➡️ 4. Server Response ➡️ 5. Browser Render
+```
