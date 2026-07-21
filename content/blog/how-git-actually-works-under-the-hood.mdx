@@ -1,0 +1,158 @@
+---
+title: "Under the Hood: How Git Actually Stores Your Code"
+date: "2026-07-21"
+excerpt: "We all use 'git add' and 'git commit'. But what actually happens inside the hidden .git folder? Let’s unpack Git's secret object database!"
+tags: ["git", "devops", "computer-science", "webdev", "architecture"]
+---
+
+If you ask most software engineers how Git works, they’ll tell you: 
+> *"It tracks the changes (diffs) you make to your files over time."*
+
+Here is the wild secret: **Git doesn't actually store diffs.**
+
+When you make a commit, Git takes a complete **snapshot** of your entire project at that exact moment in time. 
+
+So how does Git do this without eating up gigabytes of storage on your hard drive? The secret lies in three tiny digital building blocks hidden inside your `.git/objects` folder: **Blobs, Trees, and Commits.**
+
+---
+
+## 1. The Blob (Binary Large Object) 📄
+
+When you run `git add index.js`, Git compresses the contents of `index.js` using zlib, generates a unique 40-character SHA-1 hash (like `a1b2c3...`), and saves it as a **Blob**.
+
+* **Key Detail:** A Blob *only* stores the contents of a file. It doesn't store the file name, creation date, or folder path!
+* **Optimization Magic:** If two files in your project have identical text, Git creates **only one Blob**. It doesn't duplicate data!
+
+---
+
+## 2. The Tree (Directory Folder) 📁
+
+If Blobs don't store file names, where do the file names live? Inside **Trees**!
+
+A Tree object represents a directory or folder. It holds a list of pointers that link file names to their corresponding Blob hashes:
+
+```text
+[ Tree: root ]
+ ├── "index.js"  ---> Points to [ Blob: a1b2c3... ]
+ ├── "styles.css" ---> Points to [ Blob: d4e5f6... ]
+ └── "src/"       ---> Points to [ Sub-Tree: g7h8i9... ]
+ ```
+ ## 3. The Commit (The Saved Snapshot) 📸
+Finally, when you run git commit -m "Initial commit", Git creates a Commit Object.
+
+A Commit object is surprisingly small. It contains only 4 things:
+
+A pointer to the Top-Level Tree hash (the snapshot of your project).
+
+The Author and Committer info (Name, Email, Timestamp).
+
+The Commit Message.
+
+A pointer to the Parent Commit (creating the chain of history!).
+
+```text[ Commit 2: "Add styling" ]
+   ├── Parent  ---> [ Commit 1: "Initial commit" ]
+   └── Tree    ---> [ Root Tree ]
+                       ├── "index.js"  ---> [ Blob: a1b2c3... ]
+                       └── "style.css" ---> [ Blob: d4e5f6... ]
+```
+🛠️ See it for yourself in your terminal!
+Want to see this magic in real life? Open any Git repository in your terminal and run this command:
+```text
+git cat-file -p HEAD
+```
+You won't see raw code—you'll see the exact tree hash, author info, and commit message that Git compiled under the hood!
+---
+
+Whether you're building a side project or contributing to open-source software, **Git** is the absolute backbone of modern developer workflows.
+
+Most of us run commands like `git add` and `git commit` on autopilot. But understanding **what those commands actually do to your code behind the scenes** makes debugging merge conflicts and navigating project history feel effortless.
+
+Let's break down the essential Git commands across the entire development lifecycle!
+
+---
+
+## 4. Setting Up & Checking Status 🛠️
+
+### `git init`
+Initializes a brand-new Git repository in your current folder by creating a hidden `.git/` folder containing your project's object database and configuration.
+
+### `git status`
+Shows the state of your working directory and staging area. It tells you:
+* Which files are modified.
+* Which files are staged for the next commit.
+* Which files are untracked.
+
+### `git log --oneline`
+Displays a clean, single-line timeline of your commit history, showing each commit's unique SHA-1 hash and message.
+
+---
+
+## 5. The Core 3-Stage Pipeline 🔄
+
+Git manages your code using three distinct areas:
+```text
+[ Working Directory ]  ───( git add )───>  [ Staging Area ]  ───( git commit )───>  [ Local Repository ]
+```
+### `git add <file>` (or `git add .`)
+Moves changes from your Working Directory into the **Staging Area** (the Index). 
+* **Under the Hood:** Git compresses your file content, creates a **Blob object**, and writes it into `.git/objects`.
+
+### `git commit -m "Your descriptive message"`
+Takes a permanent snapshot of everything currently in your Staging Area and saves it to your local repository.
+* **Under the Hood:** Git creates a **Tree object** (linking file names to Blobs) and a **Commit object** (pointing to the Tree, author info, and parent commit).
+
+---
+
+## 6. Branching & Merging 🌿
+
+Branches allow you to work on new features safely without breaking the production code.
+
+### `git branch <branch-name>`
+Creates a new branch. 
+* **Under the Hood:** A branch in Git is simply a tiny 41-byte text file pointing to a specific commit hash!
+
+### `git checkout -b <branch-name>` (or `git switch -c <branch-name>`)
+Creates a new branch and instantly switches your active working space to it.
+
+### `git merge <feature-branch>`
+Combines the commit history from `<feature-branch>` into your currently active branch.
+
+---
+
+## 7. Remote Collaboration (GitHub / GitLab) ☁️
+
+### `git remote add origin <URL>`
+Connects your local Git repository to a remote server (like GitHub).
+
+### `git push -u origin <branch-name>`
+Uploads your local commit history and objects to the remote server so teammates can access them.
+
+### `git pull`
+Fetches the latest commits from the remote repository and automatically merges them into your local working branch.
+
+---
+
+## Summary Command Cheat Sheet 💡
+```text
+| Task | Command |
+| :--- | :--- |
+| **Initialize repo** | `git init` |
+| **Check repo status** | `git status` |
+| **Stage changes** | `git add .` |
+| **Save snapshot** | `git commit -m "commit message"` |
+| **Create & switch branch** | `git checkout -b feature-name` |
+| **Merge branch** | `git merge feature-name` |
+| **Upload to GitHub** | `git push origin main` |
+| **Download updates** | `git pull` |
+```
+---
+
+## Summary Cheat Sheet 💡
+```text
+Object          What it stores                Real-world equivalent
+Blob            Raw file contents (data)      Unlabelled sheet of paper
+Tree            Folder structure & file names   Folder containing labelled sheets
+Commit          Pointer to Tree + Author + Parent     Photo of the folder with a timestamp
+```
+Git isn't a mysterious black box—it's just a simple, elegant graph database tracking compressed snapshots!
