@@ -1,4 +1,5 @@
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import remarkGfm from 'remark-gfm';
 import { type ComponentProps } from 'react';
 
 const components = {
@@ -34,7 +35,15 @@ const components = {
 export function MDXContent({ source }: { source: string }) {
   return (
     <article className="prose prose-zinc dark:prose-invert max-w-none">
-      <MDXRemote source={source} components={components} />
+      <MDXRemote
+        source={source}
+        components={components}
+        options={{
+          mdxOptions: {
+            remarkPlugins: [remarkGfm],
+          },
+        }}
+      />
     </article>
   );
 }
