@@ -3,7 +3,7 @@ import { getAllPosts } from '@/lib/mdx';
 import { BlogCard } from '@/components/BlogCard';
 
 export const metadata = {
-  title: 'Blog | AI Journal',
+  title: 'Blog',
   description: 'Essays on software engineering, AI, and continuous learning.',
 };
 

@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 
 const projects = [
   {
-    name: 'Animeverse Gamming',
-    description: 'A simple platform for playing leasure games online built with only base tech stack HTML, CSS, and JavaScript.',
+    name: 'Animeverse Gaming',
+    description: 'A simple platform for playing leisure games online built with only base tech stack HTML, CSS, and JavaScript.',
     link: 'https://animeversegamming.vercel.app/',
   },
   {
@@ -41,7 +41,7 @@ export default function ProjectsPage() {
             <li key={project.name} className="group relative flex flex-col items-start">
               <h2 className="mt-6 text-base font-semibold text-zinc-800 dark:text-zinc-100">
                 <div className="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 dark:bg-zinc-800/50 sm:-inset-x-6 sm:rounded-2xl" />
-                <a href={project.link}>
+                <a href={project.link} target={project.link.startsWith('http') ? '_blank' : undefined} rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}>
                   <span className="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl" />
                   <span className="relative z-10">{project.name}</span>
                 </a>
