@@ -14,7 +14,7 @@ export default function Home() {
             Full Stack Developer, AI & Tech Enthusiast, and Continuous Learner.
           </h1>
           <p className="mt-6 text-lg leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-xl">
-            I&apos;m a prefinal year computer science student building intelligent systems and documenting my journey. Here, I share my thoughts on Artificial Intelligence, machine learning, and Technology.
+            I&apos;m a final year computer science student building intelligent systems and documenting my journey. Here, I share my thoughts on Artificial Intelligence, machine learning, and Technology.
           </p>
         </div>
       </Container>
